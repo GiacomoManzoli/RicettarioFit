@@ -1,0 +1,38 @@
+<h3>Aggiungi alimento</h3>
+
+<md-input-container class="full-width">
+    <input mdInput [(ngModel)]="ingredient.name" placeholder="Nome alimento" class="full-width"/>
+</md-input-container>
+<h4>Valori nutrizionali per 100g</h4>
+<div class="flex-container" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="flex-item" fxFlex>
+        <md-input-container class="full-width">
+            <input mdInput [(ngModel)]="ingredient.calories" placeholder="Calorie" class="full-width" type="number"/>
+        </md-input-container>
+    </div>
+    <div class="flex-item" fxFlex>
+        <md-input-container class="full-width">
+            <input mdInput [(ngModel)]="ingredient.carbs" placeholder="Carboidrati" class="full-width" type="number"/>
+        </md-input-container>
+    </div>
+    <div class="flex-item" fxFlex>
+        <md-input-container class="full-width">
+            <input mdInput [(ngModel)]="ingredient.fats" placeholder="Grassi" class="full-width" type="number"/>
+        </md-input-container>
+    </div>
+    <div class="flex-item" fxFlex>
+        <md-input-container class="full-width">
+            <input mdInput [(ngModel)]="ingredient.proteins" placeholder="Proteine" class="full-width" type="number"/>
+        </md-input-container>
+    </div>
+</div>
+
+
+
+
+
+
+<md-dialog-actions>
+    <button md-button (click)="onConfirm()">AGGIUNGI</button>
+    <button md-button (click)="onCancel()">CHIUDI</button>
+</md-dialog-actions>

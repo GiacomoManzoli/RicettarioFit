@@ -1,0 +1,70 @@
+<md-card class="single-card">
+    <h2 md-dialog-title>Ricette</h2>
+
+    <div>
+        <div class="flex-container custom-table-row custom-table-header" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="flex-item custom-table-cell centered-col" fxFlex>Nome</div>
+            <div class="flex-item custom-table-cell centered-col" fxFlex="100px">Calorie</div>
+            <div class="flex-item custom-table-cell centered-col" fxFlex="100px">Carboidrati (g)</div>
+            <div class="flex-item custom-table-cell centered-col" fxFlex="100px">Grassi (g)</div>
+            <div class="flex-item custom-table-cell centered-col" fxFlex="100px">Proteine (g)</div>
+        </div>
+        <div  *ngFor="let recipe of recipes">
+            <div class="flex-container custom-table-row" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="flex-item custom-table-cell flex-container"
+                     fxFlex="40px" fxLayoutAlign="space-between bottom" >
+                    <button class="flex-item custom-table-detail-icon-button" (click)="onSelectRecipe(recipe)">
+                        <i class="material-icons" *ngIf="selectedRecipe !== recipe">keyboard_arrow_right</i>
+                        <i class="material-icons" *ngIf="selectedRecipe === recipe">keyboard_arrow_down</i>
+                    </button>
+                </div>
+                <div class="flex-item custom-table-cell" fxFlex>
+                    {{recipe.name}}
+                </div>
+                <div *ngIf="selectedRecipe === recipe" class="flex-item custom-table-cell" fxFlex="130px">
+                    <button class="flex-item custom-table-detail-icon-button" (click)="showDetail(recipe)">
+                        <i class="material-icons">remove_red_eye</i>
+                    </button>
+                    <button class="flex-item custom-table-detail-icon-button" (click)="editRecipe(recipe)">
+                        <i class="material-icons">mode_edit</i>
+                    </button>
+                    <button class="flex-item custom-table-detail-icon-button" (click)="deleteRecipe(recipe)">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipe.calories | number : '1.2-2'}}</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipe.carbs | number : '1.2-2'}}</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipe.fats | number : '1.2-2'}}</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipe.proteins | number : '1.2-2'}}</div>
+            </div>
+            <!-- riga con i dettagli -->
+            <div *ngIf="selectedRecipe === recipe">
+                <div  *ngFor="let recipeIngredient of recipe.recipeIngredients"
+                 class="flex-container custom-table-row-detail" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div class="flex-item custom-table-cell flex-container"
+                         fxFlex="60px" fxLayoutAlign="space-between bottom" >
+                    </div>
+                    <div class="flex-item custom-table-cell" fxFlex>
+                        <my-ingredient-name [ingredient]="recipeIngredient.ingredient"></my-ingredient-name>
+                    </div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="40px">
+                        {{recipeIngredient.qty}} g
+                    </div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.calories | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.carbs | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.fats | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.proteins | number : '1.2-2'}}</div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</md-card>
+
+<span class="app-action">
+  <button md-fab (click)="onAdd()"><md-icon>add</md-icon></button>
+</span>
+

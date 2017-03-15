@@ -1,0 +1,18 @@
+
+<md-card class="login-card">
+
+    <md-card-content>
+
+        <md-input-container class="full-width">
+            <input mdInput [(ngModel)]="username" placeholder="Username" value="Google">
+        </md-input-container>
+        <br />
+        <md-input-container class="full-width">
+            <input mdInput [(ngModel)]="password" placeholder="Password" value="Google" type="password">
+        </md-input-container>
+
+    </md-card-content>
+    <md-card-actions>
+        <button md-button (click)="login()">LOGIN</button>
+    </md-card-actions>
+</md-card>

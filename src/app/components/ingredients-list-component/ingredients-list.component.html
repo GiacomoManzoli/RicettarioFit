@@ -1,0 +1,49 @@
+<div>
+    <md-input-container class="full-width">
+        <input mdInput #searchBox id="search-box" (keyup)="search(searchBox.value)" type="search" placeholder="Cerca" />
+    </md-input-container>
+    <div>
+        <div class="flex-container strange-table-row strange-table-header" fxLayout="row" fxLayoutAlign="space-between center">
+
+
+            <div *ngIf="actionName !== ''" class="flex-item strange-table-cell centered-col" fxFlex="25%">Nome</div>
+            <div *ngIf="actionName === ''" class="flex-item strange-table-cell centered-col" fxFlex="40%">Nome</div>
+
+
+            <div class="flex-item strange-table-cell centered-col" fxFlex="15%">Calorie</div>
+            <div class="flex-item strange-table-cell centered-col" fxFlex="15%">Carb. (g)</div>
+            <div class="flex-item strange-table-cell centered-col" fxFlex="15%">Grassi (g)</div>
+            <div class="flex-item strange-table-cell centered-col" fxFlex="15%">Proteine (g)</div>
+            <div *ngIf="actionName !== ''" class="flex-item strange-table-cell centered-col" fxFlex="15%">
+
+            </div>
+        </div>
+        <div class="strange-table-content">
+            <div *ngFor="let ingredient of ingredientsFiltered">
+                <div class="flex-container strange-table-row" fxLayout="row" fxLayoutAlign="space-between center">
+
+                    <div *ngIf="actionName !== ''" class="flex-item strange-table-cell" fxFlex="25%">
+                        {{ingredient.name}}
+                    </div>
+                    <div *ngIf="actionName === ''" class="flex-item strange-table-cell" fxFlex="40%">
+                        {{ingredient.name}}
+                    </div>
+
+                    <div class="flex-item strange-table-cell centered-col" fxFlex="15%">{{ingredient.calories | number : '1.2-2'}}</div>
+                    <div class="flex-item strange-table-cell centered-col" fxFlex="15%">{{ingredient.carbs | number : '1.2-2'}}</div>
+                    <div class="flex-item strange-table-cell centered-col" fxFlex="15%">{{ingredient.fats | number : '1.2-2'}}</div>
+                    <div class="flex-item strange-table-cell centered-col" fxFlex="15%">{{ingredient.proteins | number : '1.2-2'}}</div>
+
+                    <div *ngIf="actionName !== ''" class="flex-item strange-table-cell centered-col" fxFlex="15%">
+                        <button class="strange-table-detail-icon-button" (click)="onSelectHandler(ingredient)" >
+                            <i class="material-icons">{{actionName}}</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

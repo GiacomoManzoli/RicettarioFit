@@ -1,0 +1,28 @@
+<md-sidenav-container class="app-contaier">
+    <md-sidenav #sidenav mode="push" class="app-sidenav">
+        <!-- sidenav content -->
+        <md-nav-list>
+            <a md-list-item routerLink="/ingredients" routerLinkActive="active">Alimenti</a>
+            <a md-list-item routerLink="/recipes" routerLinkActive="active">Ricette</a>
+            <a md-list-item routerLink="/add-recipe" routerLinkActive="active">Aggiungi ricetta</a>
+            <a md-list-item routerLink="/meals" routerLinkActive="active">Pasti</a>
+            <a md-list-item routerLink="/add-meal" routerLinkActive="active">Aggiungi pasto</a>
+        </md-nav-list>
+
+    </md-sidenav>
+
+    <md-toolbar color="primary">
+
+        <button class="app-icon-button" (click)="sidenav.toggle()" id="toggleButton" #toggleButton  *ngIf="logged">
+            <i class="material-icons app-toolbar-menu">menu</i>
+        </button>
+
+        <h1 class="app-title">{{title}}</h1>
+
+    </md-toolbar>
+
+    <router-outlet></router-outlet> <!-- Dove vengono renderizzati i componenti -->
+
+
+</md-sidenav-container>
+

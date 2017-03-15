@@ -1,0 +1,43 @@
+<md-card class="single-card">
+    <h2>Alimenti</h2>
+    <div>
+        <md-input-container class="full-width">
+            <input mdInput #searchBox id="search-box" (keyup)="search(searchBox.value)" type="search" placeholder="Cerca" />
+        </md-input-container>
+
+        <div *ngIf="ingredientsFiltered == null" >
+            <md-spinner
+                    class="app-spinner"
+                    color="primary"
+                    mode="indeterminate">
+            </md-spinner>
+        </div>
+        <div *ngIf="ingredientsFiltered != null">
+            <div class="flex-container custom-table-row custom-table-header" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="flex-item custom-table-cell centered-col" fxFlex>Nome</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="100px">Calorie</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="100px">Carb. (g)</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="100px">Grassi (g)</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="100px">Proteine (g)</div>
+
+            </div>
+            <div class="custom-table-content">
+                <div *ngFor="let ingredient of ingredientsFiltered" class="flex-container custom-table-row" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div class="flex-item custom-table-cell" fxFlex>
+                        <my-ingredient-name [ingredient]="ingredient"></my-ingredient-name>
+                    </div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{ingredient.calories | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{ingredient.carbs | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{ingredient.fats | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{ingredient.proteins | number : '1.2-2'}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</md-card>
+
+
+<span class="app-action">
+  <button md-fab (click)="onAdd()"><md-icon>add</md-icon></button>
+</span>
+

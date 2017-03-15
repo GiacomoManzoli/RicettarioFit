@@ -1,0 +1,230 @@
+<md-card class="single-card">
+
+    <!-- INIZIO: dati generici-->
+    <div *ngIf="!editMode && !addMode">
+        <div class="title-row">
+            <h2 class="inline-title">{{meal.name}}</h2>
+            <div class="inline-title">
+                <md-chip-list class="mat-chip-list-stacked">
+                    <md-chip *ngFor="let tag of meal.tags"
+                             selectable="false"
+                             color="none" disabled>
+                        {{tag}}
+                    </md-chip>
+                </md-chip-list>
+            </div>
+        </div>
+
+        <md-input-container class="full-width">
+            <textarea mdInput [(ngModel)]="meal.description" placeholder="Descrizione" class="add-textarea" disabled></textarea>
+        </md-input-container>
+    </div>
+    <div *ngIf="editMode || addMode" >
+        <h2 *ngIf="addMode">Crea nuovo pasto</h2>
+        <h2 *ngIf="editMode">Modifica pasto</h2>
+        <md-input-container class="full-width">
+            <input mdInput [(ngModel)]="meal.name" placeholder="Nome pasto" class="full-width"/>
+        </md-input-container>
+
+        <md-input-container class="full-width">
+            <input mdInput [(ngModel)]="mealTagsString" placeholder="Tag" class="full-width"/>
+        </md-input-container>
+
+        <md-input-container class="full-width">
+            <textarea mdInput [(ngModel)]="meal.description" placeholder="Descrizione" class="add-textarea"></textarea>
+        </md-input-container>
+    </div>
+    <!-- FINE : dati generici -->
+    <div class="divider"></div>
+
+    <!-- INIZIO : selezione ingredienti-->
+    <div *ngIf="editMode || addMode" >
+        <h3>Seleziona ricette e ingredienti</h3>
+        <div class="add-recipe-ingredients-list-container">
+            <div class="flex-container custom-table-row custom-table-header" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="flex-item custom-table-cell centered-col almost-full-width" fxFlex>
+                    <input #searchBox id="search-box" class="full-width" (keyup)="search(searchBox.value)" type="search" placeholder="Filtra"/>
+                </div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px">Calorie</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px">Carb. (g)</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px">Grassi (g)</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px">Proteine (g)</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="40px"></div>
+            </div>
+        </div>
+        <div class="custom-table-content-small">
+            <div *ngFor="let recipe of recipes">
+                <div class="flex-container custom-table-row" fxLayout="row" fxLayoutAlign="space-between center">
+                    <div class="flex-item custom-table-cell" fxFlex>
+                        {{recipe.name}}
+                    </div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{recipe.calories | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{recipe.carbs | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{recipe.fats | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{recipe.proteins | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="40px">
+                        <button class="custom-table-detail-icon-button" (click)="onRecipesSelect(recipe)" >
+                            <i class="material-icons">add_box</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div *ngFor="let ingredient of ingredients">
+                <div class="flex-container custom-table-row" fxLayout="row" fxLayoutAlign="space-between center">
+
+                    <div class="flex-item custom-table-cell" fxFlex>
+                        <my-ingredient-name [ingredient]="ingredient"></my-ingredient-name>
+                    </div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{ingredient.calories | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{ingredient.carbs | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{ingredient.fats | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{ingredient.proteins | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="40px">
+                        <button class="custom-table-detail-icon-button" (click)="onIngredientSelect(ingredient)" >
+                            <i class="material-icons">add_box</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="divider"></div>
+    </div>
+    <!-- FINE : selezione ingredienti -->
+
+    <!-- INIZIO : quantità ingredienti -->
+    <div>
+        <h3>Componenti del pasto</h3>
+        <div class="add-recipe-ingredients-added-container">
+            <!-- Header tabella -->
+            <div class="flex-container custom-table-row custom-table-header" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="flex-item custom-table-cell centered-col" fxFlex>Nome</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px">Quantità (g)</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px">Calorie</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px">Carb. (g)</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px">Grassi (g)</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px">Proteine (g)</div>
+                <div    *ngIf="editMode || addMode"
+                        class="flex-item custom-table-cell centered-col" fxFlex="40px">
+                </div>
+            </div>
+            <!-- Contenuto tabella -->
+            <div class="custom-table-content">
+                <div *ngFor="let mealRecipe of meal.mealRecipes" >
+                    <div class="flex-container custom-table-row" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div class="flex-item custom-table-cell" fxFlex>
+                            {{mealRecipe.recipe.name}}
+                        </div>
+                        <div class="flex-item custom-table-cell centered-col" fxFlex="80px">
+                            <div    *ngIf="editMode || addMode"
+                                    class="almost-full-width">
+                                <input  [(ngModel)]="mealRecipe.qty" type="number" class="almost-full-width"/>
+                            </div>
+                            <span   *ngIf="!editMode && !addMode">{{mealRecipe.qty}}</span>
+                        </div>
+                        <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{(mealRecipe.recipe.calories * mealRecipe.qty) | number : '1.2-2'}}</div>
+                        <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{(mealRecipe.recipe.carbs * mealRecipe.qty) | number : '1.2-2'}}</div>
+                        <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{(mealRecipe.recipe.fats * mealRecipe.qty) | number : '1.2-2'}}</div>
+                        <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{(mealRecipe.recipe.proteins * mealRecipe.qty) | number : '1.2-2'}}</div>
+                        <div    *ngIf="editMode || addMode"
+                                class="flex-item custom-table-cell centered-col" fxFlex="40px">
+                            <button class="custom-table-detail-icon-button"
+                                    (click)="onRemoveRecipe(mealRecipe)">
+                                <i class="material-icons">indeterminate_check_box</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div *ngFor="let mealIngredient of meal.mealIngredients" >
+                    <div class="flex-container custom-table-row" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div class="flex-item custom-table-cell" fxFlex>
+                            <my-ingredient-name [ingredient]="mealIngredient.ingredient"></my-ingredient-name>
+                        </div>
+                        <div class="flex-item custom-table-cell centered-col" fxFlex="80px">
+                            <div class="flex-item custom-table-cell centered-col" fxFlex="80px">
+                                <div    *ngIf="editMode || addMode"
+                                        class="almost-full-width">
+                                    <input  [(ngModel)]="mealIngredient.qty" type="number" class="almost-full-width"/>
+                                </div>
+                                <span   *ngIf="!editMode && !addMode">{{mealIngredient.qty}}</span>
+                            </div>
+                        </div>
+                        <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{(mealIngredient.ingredient.calories * mealIngredient.qty/100) | number : '1.2-2'}}</div>
+                        <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{(mealIngredient.ingredient.carbs * mealIngredient.qty/100) | number : '1.2-2'}}</div>
+                        <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{(mealIngredient.ingredient.fats * mealIngredient.qty/100) | number : '1.2-2'}}</div>
+                        <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{(mealIngredient.ingredient.proteins * mealIngredient.qty/100) | number : '1.2-2'}}</div>
+                        <div    *ngIf="editMode || addMode"
+                                class="flex-item custom-table-cell centered-col" fxFlex="40px">
+                            <button class="custom-table-detail-icon-button"
+                                    (click)="onRemoveIngredient(mealIngredient)">
+                                <i class="material-icons">indeterminate_check_box</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer tabella -->
+            <div class="flex-container total-row" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="flex-item custom-table-cell" fxFlex>
+                    Totale
+                </div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px"></div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{ meal.calories | number : '1.2-2'}}</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{ meal.carbs | number : '1.2-2'}}</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{ meal.fats | number : '1.2-2'}}</div>
+                <div class="flex-item custom-table-cell centered-col" fxFlex="80px">{{ meal.proteins | number : '1.2-2'}}</div>
+                <div *ngIf="editMode || addMode" class="flex-item custom-table-cell centered-col" fxFlex="40px"></div>
+            </div>
+        </div>
+    </div>
+    <!-- FINE : quantità ingredienti -->
+    <div class="divider"></div>
+
+    <!-- INIZIO : ingredienti necessari -->
+    <div>
+        <h3>Ingredienti necessari</h3>
+        <div *ngFor="let mealRecipe of meal.mealRecipes">
+            <h4>{{mealRecipe.recipe.name}}</h4>
+            <ul>
+                <li *ngFor="let recipeIngredient of mealRecipe.recipe.recipeIngredients">
+                    {{recipeIngredient.ingredient.name}} - {{recipeIngredient.qty * mealRecipe.qty}} g
+                </li>
+            </ul>
+        </div>
+        <div>
+            <h4 *ngIf="meal.mealIngredients.length > 0">Sfusi:</h4>
+            <ul>
+                <li *ngFor="let mealIngredient of meal.mealIngredients">
+                    <my-ingredient-name [ingredient]="mealIngredient.ingredient"></my-ingredient-name> - {{mealIngredient.qty}} g
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- FINE : ingredienti necessari  -->
+
+    <!-- INIZIO : action row -->
+    <div class="action-row">
+        <button md-button color="primary"
+                (click)="_onPerformAction()">{{actionText}}</button>
+        <button *ngIf="editMode || addMode"
+                md-button
+                (click)="_onAbortAction()">ANNULLA</button>
+    </div>
+    <!-- FINE : action row -->
+</md-card>
+
+
+
+
+<!-- Card: grafico proporzioni -->
+<!--
+<md-card fxFlex="2 500px auto" class="custom-card" >
+    <h3>Valori nutrizionali</h3>
+    <div style="display: block">
+        <canvas baseChart
+                [data]="pieChartData"
+                [labels]="pieChartLabels"
+                chartType="pie"
+                [options]="{legend:{display: true,labels:{fontSize:24}, position: 'right'}}"></canvas>
+    </div>
+</md-card>-->
+
