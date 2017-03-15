@@ -74,7 +74,7 @@ export class RecipesService {
 
     deleteRecipe(recipe : Recipe) : Promise<void> {
         let url = environment.API_URL +`/recipes/${recipe.id}`;
-        return this.http.delete(url, {headers: this.headers})
+        return this.http.delete(url, this.options)
             .toPromise()
             .then(() => {})
             .catch((err) => this.errorService.handleError(err));
