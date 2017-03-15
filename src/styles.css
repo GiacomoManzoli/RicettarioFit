@@ -16,6 +16,13 @@ h1, h2, h3, h4 {
     font-weight: 400;
 }
 
+a {
+    color: white;
+}
+
+a:visited, a:hover {
+    color: navajowhite;
+}
 
 .app-action {
     display: inline-block;
@@ -83,7 +90,7 @@ h1, h2, h3, h4 {
 
 .custom-table-row-detail {
     padding: 0;
-    background: #fafafa;
+    background: #333;
     width: 100%;
     border-bottom: 1px solid #eee;
     font-size: smaller;
@@ -137,7 +144,11 @@ h1, h2, h3, h4 {
     padding: 0 5px 0 5px;
     background-color: transparent;
     border: none;
-    color: #666;
+    color: #AAAAAA;
+}
+
+.custom-table-detail-icon-button i:hover {
+    color: #388E3E;
 }
 
 /* VARIE */
