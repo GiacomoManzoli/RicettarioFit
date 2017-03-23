@@ -53,10 +53,10 @@
                         <span *ngIf="mealRecipe.qty == 1">porzione</span>
                         <span *ngIf="mealRecipe.qty != 1">porzioni</span>
                     </div>
-                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{mealRecipe.recipe.calories | number : '1.2-2'}}</div>
-                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{mealRecipe.recipe.carbs | number : '1.2-2'}}</div>
-                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{mealRecipe.recipe.fats | number : '1.2-2'}}</div>
-                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{mealRecipe.recipe.proteins | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{mealRecipe.recipe.calories * mealRecipe.qty| number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{mealRecipe.recipe.carbs * mealRecipe.qty| number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{mealRecipe.recipe.fats * mealRecipe.qty| number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{mealRecipe.recipe.proteins * mealRecipe.qty | number : '1.2-2'}}</div>
                 </div>
                 <!-- Parte con gli ingredienti sfusi -->
                 <div  *ngFor="let recipeIngredient of meal.mealIngredients"
@@ -70,10 +70,10 @@
                     <div class="flex-item custom-table-cell centered-col" fxFlex="100px">
                         {{recipeIngredient.qty}} g
                     </div>
-                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.calories | number : '1.2-2'}}</div>
-                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.carbs | number : '1.2-2'}}</div>
-                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.fats | number : '1.2-2'}}</div>
-                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.proteins | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.calories * recipeIngredient.qty| number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.carbs * recipeIngredient.qty| number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.fats * recipeIngredient.qty| number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.proteins * recipeIngredient.qty| number : '1.2-2'}}</div>
                 </div>
             </div>
         </div>

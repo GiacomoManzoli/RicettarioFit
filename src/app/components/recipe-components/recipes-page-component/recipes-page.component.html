@@ -50,10 +50,10 @@
                     <div class="flex-item custom-table-cell centered-col" fxFlex="40px">
                         {{recipeIngredient.qty}} g
                     </div>
-                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.calories | number : '1.2-2'}}</div>
-                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.carbs | number : '1.2-2'}}</div>
-                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.fats | number : '1.2-2'}}</div>
-                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.proteins | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.calories * recipeIngredient.qty | number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.carbs * recipeIngredient.qty| number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.fats * recipeIngredient.qty| number : '1.2-2'}}</div>
+                    <div class="flex-item custom-table-cell centered-col" fxFlex="100px">{{recipeIngredient.ingredient.proteins * recipeIngredient.qty| number : '1.2-2'}}</div>
                 </div>
 
 

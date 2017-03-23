@@ -33,7 +33,6 @@ export class RecipesService {
                 return recipe;
             })
             .catch((err) => this.errorService.handleError(err));
-
     }
 
     getRecipes() : Promise<Recipe[]> {
@@ -62,8 +61,6 @@ export class RecipesService {
                 return y;
             })
             .catch((err) => this.errorService.handleError(err));
-
-
     }
 
     updateRecipe(recipe : Recipe) : Promise<void> {
